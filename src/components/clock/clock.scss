@@ -1,0 +1,189 @@
+$container-width:100%;
+$clock-container-width:200px;
+$clock-container-height:200px;
+$clock-container-border-radius:100%;
+$clock-container-bg:#2874f0;
+
+$clock-center-width: 10px;
+$clock-center-height: 10px;
+$clock-center-left:50%;
+$clock-center-top:50%;
+$clock-center-bg:#ffe11b;
+
+$hands-bg: #ffe11b;
+$hands-border-radius:0 3px 3px 0;
+
+$hand-hour-height:50px;
+$hand-hour-width:5px;
+$hand-hour-top:26%;
+$hand-hour-left:49.5%;
+
+$hand-minute-height:90px;
+$hand-minute-width:3px;
+$hand-minute-top:7.5%;
+$hand-minute-left:50%;
+
+$hand-seconds-height:100px;
+$hand-seconds-width:2px;
+$hand-seconds-top:3%;
+$hand-seconds-left:50%;
+$hand-seconds-bg:#fff;
+
+$ticks-height:200px;
+$ticks-width:200px;
+$ticks-border-radius:100%;
+
+$tick-1-roman : I;
+$tick-2-roman : II;
+
+.container{
+  display:flex;
+  width:$container-width;
+  flex-direction:column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items:center;
+}
+
+.clock-container{
+  position: relative;
+  height: $clock-container-height;
+  width: $clock-container-width;
+  border-radius:$clock-container-border-radius;
+  background: $clock-container-bg;
+  background: -webkit-radial-gradient(center ellipse, #032da0 0%, #2469d9 100%);
+  background: radial-gradient(ellipse at center, #2874f0 0%, #032da0 100%);
+  padding:5px;
+}
+
+.clock-child-center{
+  width:$clock-center-width;
+  height:$clock-center-height;
+  position: absolute;
+  top:$clock-center-top;
+  left:$clock-center-left;
+  transform:translate(-$clock-center-left,-$clock-center-top);
+  background:$clock-center-bg;
+  z-index:9999;
+  border-radius:50%;
+  border: 1px solid #000;
+}
+
+%hands{
+  position:absolute;
+  background-color: $hands-bg;
+  border-radius: $hands-border-radius;
+  transition: transform 1000ms linear;
+  transform-origin: bottom;
+  text-align:center;
+  z-index:9998;
+}
+
+.clock-child-hours,.clock-child-minutes,.clock-child-seconds{
+    @extend %hands
+}
+
+.clock-child-hours{
+  height: $hand-hour-height;
+  width: $hand-hour-width;
+  top:$hand-hour-top;
+  left:$hand-hour-left;
+  transform:translate(-26%,-$hand-hour-left);
+  transform:rotate(360deg);
+}
+
+.clock-child-minutes{
+  height: $hand-minute-height;
+  width: $hand-minute-width;
+  top:$hand-minute-top;
+  left:$hand-minute-left;
+  transform:translate(-7.5%,-50%);
+  transform:rotate(0deg);
+}
+
+.clock-child-seconds{
+  height: $hand-seconds-height;
+  width: $hand-seconds-width;
+  top:$hand-seconds-top;
+  left:$hand-seconds-left;
+  background-color: $hand-seconds-bg;
+  transform:translate(-3%,-50%);
+  transform:rotate(360deg);
+}
+
+.clock-ticks{
+  position: relative;
+  height: $ticks-height;
+  width: $ticks-width;
+  border-radius:$ticks-border-radius;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.clock-ticks div{
+  position: absolute;
+  text-align:center;
+  display:flex;
+  justify-content: center;
+  height:15px;
+  width:4px;
+  background-color: $hands-bg;
+}
+
+.clock-ticks div:before{
+  color:$hands-bg;
+  font-size: 9px;
+  position: absolute;
+  top:-12px;
+}
+
+@for $i from 0 through 11{
+    $divIndex : $i + 1;
+    .clock-ticks div.tick-#{$divIndex}{
+        transform: rotate(#{$i*30}deg) translate(0,-85px);
+    }
+}
+
+$roman-ticks:  (1 XII),
+              (2 I),
+              (3 II),
+              (4 III),
+              (5 IV),
+              (6 V),
+              (7 VI),
+              (8 VII),
+              (9 VIII),
+              (10 IX),
+              (11 X),
+              (12 XI);
+
+
+
+@each $i, $roman-numeral in $roman-ticks{
+  .clock-ticks div.tick-#{$i}:before{
+    content:'#{$roman-numeral}';
+  }
+}
+
+.hms{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin-top: 10px;
+  font-size: 1.3em;
+}
+
+.hms div{
+  margin-left: 2px;
+  letter-spacing: 1px;
+}
+
+@for $i from 1 through 2{
+    .hms div:nth-child(#{$i}):after{
+      content:':';
+      margin-left: 1px;
+    }
+}
+

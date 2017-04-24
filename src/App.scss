@@ -1,0 +1,15 @@
+$banner-bg: #222;
+$banner-height:232px;
+$banner-width:20px;
+$banner-font-color:#fff;
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color:$banner-bg;
+  height: $banner-height;
+  padding: $banner-width;
+  color: $banner-font-color;
+}
