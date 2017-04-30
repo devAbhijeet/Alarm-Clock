@@ -1,6 +1,16 @@
 # Alarm-Clock
 A alarm clock in ReactJS
 
+## Quick Overview
+
+```sh
+git clone https://github.com/devAbhijeet/Alarm-Clock.git
+
+cd Alarm-Clock/
+npm install
+npm start
+```
+
 
 # Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
 
