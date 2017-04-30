@@ -9,7 +9,75 @@ $banner-font-color:#fff;
 
 .App-header {
   background-color:$banner-bg;
-  height: $banner-height;
+  min-height: $banner-height;
   padding: $banner-width;
   color: $banner-font-color;
+}
+
+.App-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 80px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.App-body ul{
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 30px;
+  width: 200px;
+  background-color: lighten(#FFF,80%);
+  color: #444;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 0px 5px;
+}
+
+.App-body ul li{
+  border: 1px solid #DDD;
+  border-top: 0px solid transparent;
+  width: 100%;
+  color: #444;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.Alarm-header{
+  width: 100%;
+  background-color: #444;
+  color: #FFF;
+  padding: 10px 0px 10px 0px;
+  letter-spacing: 1px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.removeAlarm{
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.alarmTime{
+  display: flex;
+}
+
+.alarmTime .timeSuffix{
+  color: #444;
+}
+
+.disnone{
+  display: none;
 }

@@ -12,7 +12,43 @@ export class ClockDial extends Component {
   }
 
   componentDidMount() {
-    this.inc = setInterval(this.moveClockHands,1000);
+    let {stop} = this.props;
+    if(!stop){
+      this.inc = setInterval(this.moveClockHands,1000);
+    }
+  }
+
+  componentWillReceiveProps(props){
+    let {stop,moveDialTime} = props
+    if(stop){
+      clearInterval(this.inc);
+    }else if(!stop){
+      this.inc = setInterval(this.moveClockHands,1000);
+    }
+    this.setState({
+      hoursOffset: 0,
+      minutesOffset: 0,
+      secondsOffset: 0
+    });
+
+    if(moveDialTime!==undefined){
+      if(moveDialTime.id && moveDialTime.id==='H'){
+        this.setState({
+          hoursOffset: Number(moveDialTime.hour),
+          minutesOffset: Number(moveDialTime.minute)
+        });
+      }else if((moveDialTime.id && moveDialTime.id==='M')){
+        this.setState({
+          hoursOffset: Number(this.state.hoursOffset),
+          minutesOffset: Number(moveDialTime.minute)
+        });
+      }else{
+        this.setState({
+          hoursOffset: Number(moveDialTime.hour),
+          minutesOffset: Number(moveDialTime.minute)
+        });
+      }
+    }
   }
 
   moveClockHands = () => {

@@ -12,33 +12,38 @@ export class Time extends Component {
     this.timeInterval = setInterval(this.timeTick,1000);
   }
 
+  filterDateString = (timestamp) => (String(timestamp).length===1) ? '0' + timestamp : timestamp;
+
   timeTick = () => {
-      let timeNow = new Date(),
-            seconds = timeNow.getSeconds(),
-            minutes = timeNow.getMinutes(),
-            hours = timeNow.getHours();
+    let timeNow = new Date(),
+          seconds = timeNow.getSeconds(),
+          minutes = timeNow.getMinutes(),
+          hours = timeNow.getHours();
+    
+    let suffix = (hours >= 12)? 'pm' : 'am';
+    hours = ((hours + 11) % 12 + 1);
         
-
-    seconds = (String(seconds).length==1) ? '0' + seconds : seconds;
-
-    minutes = (String(minutes).length==1) ? '0' + minutes : minutes;
-
-    hours = (String(hours).length==1) ? '0' + hours : hours;
+    seconds = this.filterDateString(seconds);
+    minutes = this.filterDateString(minutes);
+    hours = this.filterDateString(hours);
       
-      this.setState({
-        hours: hours,
-        minutes:minutes,
-        seconds:seconds
-      });
-      
+    this.setState({
+      hours: hours,
+      minutes:minutes,
+      seconds:seconds,
+      suffix:suffix
+    });
   }
 
   render() {
     return (
-      <div className="hms">
-        <div>{this.state.hours}</div>
-        <div>{this.state.minutes}</div>
-        <div>{this.state.seconds}</div>
+      <div>
+        <div className="hms">
+          <div>{this.state.hours}</div>
+          <div>{this.state.minutes}</div>
+          <div>{this.state.seconds}</div>
+          <div className="timeSuffix">{this.state.suffix}</div>
+        </div>
       </div>
     );
   }

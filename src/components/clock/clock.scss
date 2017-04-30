@@ -121,6 +121,32 @@ $tick-2-roman : II;
   align-items:center;
 }
 
+.clock-ticks.animate div{
+  animation: glowticks 4s ease-in infinite;
+  cursor:pointer;
+}
+
+@keyframes glowticks{
+  0%{
+    box-shadow: 0 0 10px lighten(#fff,90%), 
+              0 0 20px #fff, 
+              0 0 30px #fff, 
+              0 0 40px #f3de58;
+  }
+  50%{
+    box-shadow: 0 0 10px #fff, 
+              0 0 20px #fff, 
+              0 0 30px #fff, 
+              0 0 40px #FF1177;
+  }
+  100%{
+    box-shadow: 0 0 10px #f3de58, 
+              0 0 20px #fff, 
+              0 0 30px #fff, 
+              0 0 40px #f3de58;
+  }
+}
+
 .clock-ticks div{
   position: absolute;
   text-align:center;
@@ -142,31 +168,39 @@ $tick-2-roman : II;
     $divIndex : $i + 1;
     .clock-ticks div.tick-#{$divIndex}{
         transform: rotate(#{$i*30}deg) translate(0,-85px);
+        //box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
     }
 }
 
-$roman-ticks:  (1 XII),
-              (2 I),
-              (3 II),
-              (4 III),
-              (5 IV),
-              (6 V),
-              (7 VI),
-              (8 VII),
-              (9 VIII),
-              (10 IX),
-              (11 X),
-              (12 XI);
+$roman-ticks:  (1 XII 12 00),
+              (2 I 1 05),
+              (3 II 2 10),
+              (4 III 3 15),
+              (5 IV 4 20),
+              (6 V 5 25),
+              (7 VI 6 30),
+              (8 VII 7 35),
+              (9 VIII 8 40),
+              (10 IX 9 45),
+              (11 X 10 50),
+              (12 XI 11 55);
 
 
 
-@each $i, $roman-numeral in $roman-ticks{
+@each $i, $roman-numeral,$hour,$minute in $roman-ticks{
   .clock-ticks div.tick-#{$i}:before{
     content:'#{$roman-numeral}';
   }
+  .clock-ticks.animate div.tick-#{$i}:before{
+    content:'#{$hour}';
+  }
+
+  .clock-ticks.animate.minutes div.tick-#{$i}:before{
+    content:'#{$minute}';
+  }
 }
 
-.hms{
+.hms,.hm{
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -175,9 +209,19 @@ $roman-ticks:  (1 XII),
   font-size: 1.3em;
 }
 
-.hms div{
+.hm{
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.hms div, .hm div{
   margin-left: 2px;
   letter-spacing: 1px;
+}
+
+.hm div:nth-child(1):after{
+  content:':';
+  margin-left: 1px;
 }
 
 @for $i from 1 through 2{
@@ -187,3 +231,100 @@ $roman-ticks:  (1 XII),
     }
 }
 
+.addAlarm{
+  position: absolute;
+  right: -5%;
+  bottom: -36%;
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  width:50px;
+  border-radius: 100%;
+  background-color:lighten($clock-container-bg,10%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color:lighten($clock-center-bg,5%);
+  font-size: 2em;
+  float: right;
+  margin-top: -23px;
+  line-height: 0px;
+  &:hover{
+    color:$clock-center-bg;
+    background-color:$clock-container-bg;
+  }
+}
+
+.timeSuffix,.alarmSuffix{
+  font-size: 10px;
+  color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.alarmTime .timeSuffix{
+  margin-left: 5px;
+}
+
+.alarmSuffix{
+  flex-direction: column;
+  color: #444;
+}
+
+.alarmSuffix span{
+  cursor: pointer;
+}
+
+.sufSelected{
+  color: #fff;
+}
+
+.addAlarmOpt{
+  font-size: 10px;
+  position: absolute;
+  right: -20%;
+  bottom: -20%;
+  margin: 0;
+  padding: 0;
+  color: #2874f0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  width: 80px;
+  text-transform: uppercase;
+}
+
+.redDot{
+  height:10px;
+  width:10px;
+  border-radius: 100%;
+  animation: stopButton 1.5s ease-in-out infinite alternate;;
+  cursor:pointer;
+  background-color:#FF1177;
+}
+
+@keyframes stopButton{
+  from {
+    box-shadow: 0 0 10px #fff, 
+    0 0 20px #fff, 
+    0 0 30px #fff, 
+    0 0 40px #FF1177, 
+    0 0 70px #FF1177, 
+    0 0 80px #FF1177, 
+    0 0 100px #FF1177, 
+    0 0 150px #FF1177;
+  }
+  to {
+    box-shadow: 0 0 5px #fff, 
+    0 0 10px #fff, 
+    0 0 15px #fff, 
+    0 0 20px #FF1177, 
+    0 0 35px #FF1177, 
+    0 0 40px #FF1177, 
+    0 0 50px #FF1177, 
+    0 0 75px #FF1177;
+  }
+}
